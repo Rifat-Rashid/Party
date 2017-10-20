@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "733771496762",
+    "firebase_url": "https://party-f17bb.firebaseio.com",
+    "project_id": "party-f17bb",
+    "storage_bucket": "party-f17bb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:733771496762:android:53448b0533e05d61",
+        "android_client_info": {
+          "package_name": "com.rashid.bharadwaj.party"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "733771496762-g8n1nsrmbe1m2bmi8uaujo8u737mpiag.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCymkpAKTI1uU1-RPe_e0mIa-Ir_Oqq54k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
