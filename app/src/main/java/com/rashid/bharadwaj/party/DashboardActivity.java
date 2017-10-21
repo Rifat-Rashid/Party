@@ -32,11 +32,6 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
         lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
-        SpannableStringBuilder builder = new SpannableStringBuilder("Host Party");
-        StyleSpan boldStyle = new StyleSpan(Typeface.BOLD);
-        builder.setSpan(boldStyle, 0, 5, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-        ((Button) findViewById(R.id.hostPartyButton)).setText(builder);
-
         Mapbox.getInstance(this, "pk.eyJ1IjoicmlmYXRyYXNoaWQiLCJhIjoiOExWXzZpVSJ9.gEuYvTL_aXc7fqZMegK9kw");
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);

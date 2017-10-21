@@ -7,6 +7,8 @@
     android:layout_height="match_parent"
     tools:context="com.rashid.bharadwaj.party.DashboardActivity">
 
+
+    
     <com.mapbox.mapboxsdk.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
@@ -14,7 +16,8 @@
         mapbox:mapbox_cameraTargetLat="40.73581"
         mapbox:mapbox_cameraTargetLng="-73.99155"
         mapbox:mapbox_styleUrl="mapbox://styles/mapbox/streets-v10"
-        mapbox:mapbox_cameraZoom="11" />
+        mapbox:mapbox_cameraZoom="11"/>
+
 
     <Button
         android:layout_width="match_parent"
@@ -26,5 +29,11 @@
         android:id="@+id/hostPartyButton"
         android:textStyle="bold"
         android:background="#FFA500"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        android:background="#78000000"/>
 
 </RelativeLayout>
