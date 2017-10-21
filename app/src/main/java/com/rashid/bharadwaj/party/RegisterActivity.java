@@ -6,11 +6,13 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,7 +32,8 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText lastNameEditText;
     private EditText emailEditText;
     private EditText passwordEditText;
-    private Button loginRouteBtn;
+    private Button registerBtn;
+    private TextView loginRouteTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +49,17 @@ public class RegisterActivity extends AppCompatActivity {
         lastNameEditText = (EditText) findViewById(R.id.last_name);
         emailEditText = (EditText) findViewById(R.id.email);
         passwordEditText = (EditText) findViewById(R.id.password);
-        loginRouteBtn = (Button) findViewById(R.id.login_route);
+        registerBtn = (Button) findViewById(R.id.register);
+        loginRouteTextView = (TextView) findViewById(R.id.login_route);
         registerLayout.setBackgroundResource(R.drawable.party_background_1);
-        loginRouteBtn.setBackgroundColor(Color.parseColor("#FFA500"));
-        loginRouteBtn.setOnClickListener(new View.OnClickListener() {
+        registerBtn.setBackgroundColor(Color.parseColor("#FFA500"));
+        registerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                registerUser();
+            }
+        });
+        loginRouteTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(RegisterActivity.this, LoginActivity.class));

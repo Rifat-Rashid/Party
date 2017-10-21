@@ -48,13 +48,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <Button
+            android:id="@+id/register"
+            android:layout_alignParentBottom="true"
+            android:textColor="#FFFFFF"
+            android:text="Register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
-    <Button
+    <TextView
         android:id="@+id/login_route"
         android:layout_alignParentBottom="true"
         android:textColor="#FFFFFF"
-        android:text="Aleady Registered? Sign-in Here"
+        android:text="Already Registered? Sign-in Here"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
