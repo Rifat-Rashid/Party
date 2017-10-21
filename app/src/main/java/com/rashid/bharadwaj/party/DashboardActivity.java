@@ -14,6 +14,6 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        //Mapbox.getInstance(this,)
+        // Mapbox.getInstance(this,)
     }
 }
