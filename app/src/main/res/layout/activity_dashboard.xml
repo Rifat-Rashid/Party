@@ -16,4 +16,15 @@
         mapbox:mapbox_styleUrl="mapbox://styles/mapbox/streets-v10"
         mapbox:mapbox_cameraZoom="11" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignBottom="@+id/mapView"
+        android:textColor="#ecf0f1"
+        android:text="@string/host_party"
+        android:textAlignment="center"
+        android:id="@+id/hostPartyButton"
+        android:textStyle="bold"
+        android:background="#FFA500"/>
+
 </RelativeLayout>
