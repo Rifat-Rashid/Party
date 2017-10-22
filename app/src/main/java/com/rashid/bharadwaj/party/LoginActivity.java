@@ -137,6 +137,7 @@ public class LoginActivity extends AppCompatActivity {
     private void handleSignInResult(GoogleSignInResult result) {
         if (result.isSuccess()) {
             GoogleSignInAccount acct = result.getSignInAccount();
+            startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
         }
     }
 }

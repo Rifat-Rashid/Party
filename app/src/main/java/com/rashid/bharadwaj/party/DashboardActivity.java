@@ -1,8 +1,11 @@
 package com.rashid.bharadwaj.party;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Typeface;
 import android.location.LocationManager;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -54,6 +57,26 @@ public class DashboardActivity extends AppCompatActivity {
 //
         // Mapbox.getInstance(this,)
     }
+
+    private void loadContacts() {
+        ContentResolver resolver = getContentResolver();
+        Cursor cursor = resolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+        if (cursor.getCount() > 0) {
+            String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+            String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+            int phoneNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)));
+            if (phoneNumber > 0) {
+                Cursor cursor2 = resolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                        null,
+                        ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                        new String[] {id}, null);
+                while (cursor2.moveToNext()) {
+
+                }
+            }
+        }
+    }
+
     @Override
     public void onStart() {
         super.onStart();
