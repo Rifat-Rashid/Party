@@ -186,7 +186,7 @@ public class DashboardActivity extends AppCompatActivity {
         /*
          * iterate through Firebase/parties
          */
-        DatabaseReference partiesRef = databaseReference.child("parties");
+         DatabaseReference partiesRef = databaseReference.child("parties");
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
