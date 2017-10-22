@@ -35,13 +35,10 @@ public class DashboardActivity extends AppCompatActivity {
     private final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
     private MapView mapView;
     LocationManager lm;
-<<<<<<< HEAD
     public int numClicks = 1;
     public View extendedView;
     public View tintedView;
-=======
     private boolean readContactsPermission;
->>>>>>> master
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +68,6 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
-<<<<<<< HEAD
         /*
          * Later implementation...
          */
@@ -95,7 +91,6 @@ public class DashboardActivity extends AppCompatActivity {
 
             }
         });
-=======
         // read contacts permission code
         readContactsPermission = false;
         int count = 0;
@@ -108,7 +103,6 @@ public class DashboardActivity extends AppCompatActivity {
             count++;
         }
         loadContacts();
->>>>>>> master
 //        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 150, 1, this);
 //
         // Mapbox.getInstance(this,)
