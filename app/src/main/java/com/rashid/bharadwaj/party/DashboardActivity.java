@@ -13,6 +13,7 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -58,6 +59,9 @@ public class DashboardActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private int instanceCounter = 0;
 
+    private Button contactsBtn;
+    private Button creditCardBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +72,8 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
         lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         databaseReference = FirebaseDatabase.getInstance().getReference();
+        contactsBtn = (Button) findViewById(R.id.demo1);
+        creditCardBtn = (Button) findViewById(R.id.demo2);
 
         Mapbox.getInstance(this, "pk.eyJ1IjoicmlmYXRyYXNoaWQiLCJhIjoiOExWXzZpVSJ9.gEuYvTL_aXc7fqZMegK9kw");
         mapView = (MapView) findViewById(R.id.mapView);
@@ -130,6 +136,18 @@ public class DashboardActivity extends AppCompatActivity {
                     YoYo.with(Techniques.SlideOutDown).duration(500).playOn(extendedLayout);
                     YoYo.with(Techniques.FadeOut).duration(500).playOn(tintedView);
                 }
+            }
+        });
+        contactsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DashboardActivity.this, ContactsActivity.class));
+            }
+        });
+        creditCardBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DashboardActivity.this, CreditCardActivity.class));
             }
         });
         // read contacts permission code
@@ -221,17 +239,17 @@ public class DashboardActivity extends AppCompatActivity {
                             new String[]{id}, null);
                     while (cursor2.moveToNext()) {
                         String phoneNumber = cursor2.getString(cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        builder.append("Contact: ").append(name).append("& Phone Number: ").append(phoneNumber).append(",\n");
+                        builder.append("Contact: ").append(name).append(" & Phone Number: ").append(phoneNumber).append(",\n");
                     }
                     cursor2.close();
                 }
             }
         }
         cursor.close();
-        Intent contactsIntent = new Intent(DashboardActivity.this, ContactsActivity.class);
+        Intent contactsIntent = new Intent("contactsIntent");
         contactsIntent.putExtra("contacts", builder.toString());
-        startActivity(contactsIntent);
-        //System.out.println(builder.toString()); // prints out to console
+        LocalBroadcastManager.getInstance(DashboardActivity.this).sendBroadcast(contactsIntent);
+        System.out.println(builder.toString()); // prints out to console
     }
 
     private void getReadContactsPermission() {
