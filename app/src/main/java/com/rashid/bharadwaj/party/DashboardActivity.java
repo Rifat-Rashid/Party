@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.StyleSpan;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
@@ -22,6 +23,9 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 public class DashboardActivity extends AppCompatActivity {
     private MapView mapView;
     LocationManager lm;
+    public int numClicks = 1;
+    public View extendedView;
+    public View tintedView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,30 @@ public class DashboardActivity extends AppCompatActivity {
                 mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 5000);
 
                 mapboxMap.getUiSettings().setTiltGesturesEnabled(false);
+            }
+        });
+
+        /*
+         * Later implementation...
+         */
+        tintedView = (View) findViewById(R.id.tintedBG);
+        extendedView = (View) findViewById(R.id.extendedLayout);
+
+        Button b = (Button) findViewById(R.id.hostPartyButton);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                numClicks++;
+                // even
+
+                if(numClicks%2 == 0){
+                    tintedView.setVisibility(View.VISIBLE);
+                    extendedView.setVisibility(View.VISIBLE);
+                }else{
+                    tintedView.setVisibility(View.INVISIBLE);
+                    extendedView.setVisibility(View.INVISIBLE);
+                }
+
             }
         });
 //        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 150, 1, this);
