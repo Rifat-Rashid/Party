@@ -29,6 +29,21 @@ public class LaunchActivityBeta extends Activity{
         buttonList.add(dashboardButton);
         buttonList.add(creditCardButton);
 
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LaunchActivityBeta.this, RegisterActivity.class));
+                overridePendingTransition(R.anim.left, R.anim.right);
+            }
+        });
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LaunchActivityBeta.this, LoginActivity.class));
+                overridePendingTransition(R.anim.left, R.anim.right);
+            }
+        });
+
         /*
          * styling
          */
@@ -42,6 +57,14 @@ public class LaunchActivityBeta extends Activity{
             public void onClick(View v) {
                 Intent i = new Intent(LaunchActivityBeta.this, DashboardActivity.class);
                 startActivity(i);
+                overridePendingTransition(R.anim.left, R.anim.right);
+            }
+        });
+
+        creditCardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LaunchActivityBeta.this, CreditCardActivity.class));
                 overridePendingTransition(R.anim.left, R.anim.right);
             }
         });
