@@ -18,7 +18,6 @@
         mapbox:mapbox_styleUrl="mapbox://styles/mapbox/streets-v10"
         mapbox:mapbox_cameraZoom="11"/>
 
-
     <Button
         android:layout_width="match_parent"
         android:layout_height="55dp"
@@ -34,6 +33,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible"
-        android:background="#78000000"/>
+        android:background="#78000000"
+        android:id="@+id/tintedBG"/>
+
 
 </RelativeLayout>
