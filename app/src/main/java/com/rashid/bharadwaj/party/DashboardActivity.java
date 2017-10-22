@@ -20,8 +20,11 @@ import android.text.style.StyleSpan;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
@@ -39,6 +42,7 @@ public class DashboardActivity extends AppCompatActivity {
     public View extendedView;
     public View tintedView;
     private boolean readContactsPermission;
+    private LinearLayout extendedLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,23 +76,25 @@ public class DashboardActivity extends AppCompatActivity {
          * Later implementation...
          */
         tintedView = (View) findViewById(R.id.tintedBG);
-        extendedView = (View) findViewById(R.id.extendedLayout);
-
+        tintedView.setVisibility(View.INVISIBLE);
+        extendedLayout = (LinearLayout) findViewById(R.id.extendedLayout);
+        YoYo.with(Techniques.SlideInDown).duration(0).playOn(extendedLayout);
+        extendedLayout.setVisibility(View.INVISIBLE);
         Button b = (Button) findViewById(R.id.hostPartyButton);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 numClicks++;
-                // even
-
-                if(numClicks%2 == 0){
+                if(numClicks%2== 0){    // even clicks
+                    extendedLayout.setVisibility(View.VISIBLE);
                     tintedView.setVisibility(View.VISIBLE);
-                    extendedView.setVisibility(View.VISIBLE);
-                }else{
-                    tintedView.setVisibility(View.INVISIBLE);
-                    extendedView.setVisibility(View.INVISIBLE);
-                }
+                    YoYo.with(Techniques.SlideInUp).duration(500).playOn(extendedLayout);
+                    YoYo.with(Techniques.FadeIn).duration(500).playOn(tintedView);
 
+                }else{
+                    YoYo.with(Techniques.SlideOutDown).duration(500).playOn(extendedLayout);
+                    YoYo.with(Techniques.FadeOut).duration(500).playOn(tintedView);
+                }
             }
         });
         // read contacts permission code
