@@ -25,13 +25,24 @@ import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.annotations.Marker;
+import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -43,6 +54,9 @@ public class DashboardActivity extends AppCompatActivity {
     public View tintedView;
     private boolean readContactsPermission;
     private LinearLayout extendedLayout;
+    private DatabaseReference databaseReference;
+    private int instanceCounter = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +66,7 @@ public class DashboardActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_dashboard);
         lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         Mapbox.getInstance(this, "pk.eyJ1IjoicmlmYXRyYXNoaWQiLCJhIjoiOExWXzZpVSJ9.gEuYvTL_aXc7fqZMegK9kw");
         mapView = (MapView) findViewById(R.id.mapView);
@@ -69,6 +84,25 @@ public class DashboardActivity extends AppCompatActivity {
                 mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 5000);
 
                 mapboxMap.getUiSettings().setTiltGesturesEnabled(false);
+                // show markers
+                /*
+                mapboxMap.setOnMarkerClickListener(new MapboxMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(@NonNull Marker marker) {
+                        Toast.makeText(DashboardActivity.this, marker.getTitle(), Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                });
+                */
+            }
+        });
+
+        Button partyClick = (Button) findViewById(R.id.hostParty);
+        partyClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                writeNewParty("Party Instance:" + String.valueOf(instanceCounter), 47.670370, -122.120182);
+                instanceCounter++;
             }
         });
 
@@ -85,13 +119,13 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 numClicks++;
-                if(numClicks%2== 0){    // even clicks
+                if (numClicks % 2 == 0) {    // even clicks
                     extendedLayout.setVisibility(View.VISIBLE);
                     tintedView.setVisibility(View.VISIBLE);
                     YoYo.with(Techniques.SlideInUp).duration(500).playOn(extendedLayout);
                     YoYo.with(Techniques.FadeIn).duration(500).playOn(tintedView);
 
-                }else{
+                } else {
                     YoYo.with(Techniques.SlideOutDown).duration(500).playOn(extendedLayout);
                     YoYo.with(Techniques.FadeOut).duration(500).playOn(tintedView);
                 }
@@ -112,13 +146,64 @@ public class DashboardActivity extends AppCompatActivity {
 //        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 150, 1, this);
 //
         // Mapbox.getInstance(this,)
+        queryPartiesToMap();
+    }
+
+    public void queryPartiesToMap() {
+        /*
+         * iterate through Firebase/parties
+         */
+        DatabaseReference partiesRef = databaseReference.child("parties");
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String id = (String) ds.getKey();
+                    DatabaseReference partyID = databaseReference.child("parties").child(id);
+                    ValueEventListener valueEventListener = new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            final Double latitude = (Double) dataSnapshot.child("lat").getValue();
+                            final Double longitude = (Double) dataSnapshot.child("lng").getValue();
+                            final String partyName = (String) dataSnapshot.child("partyName").getValue();
+                            System.out.println("Party Name: " + partyName + " Lat: " + latitude+ " Lng: " + longitude);
+
+
+                            mapView.getMapAsync(new OnMapReadyCallback() {
+                                @Override
+                                public void onMapReady(MapboxMap mapboxMap) {
+                                    mapboxMap.addMarker(new MarkerOptions()
+                                      .position(new LatLng(latitude, longitude))
+                                      .title(partyName)
+                                    );
+                                }
+                            });
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    };
+                    partyID.addListenerForSingleValueEvent(valueEventListener);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        partiesRef.addListenerForSingleValueEvent(eventListener);
     }
 
 
     // gets all user contacts and stores in StringBuilder object.
     // fields stored:
-            // name
-            // phone number
+    // name
+    // phone number
     private void loadContacts() {
         StringBuilder builder = new StringBuilder();
         ContentResolver resolver = getContentResolver();
@@ -164,6 +249,18 @@ public class DashboardActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    /*
+     * Name of party & location of party in geo coordinates
+     */
+    private void writeNewParty(String partyName, double lat, double lng) {
+        Party party = new Party(partyName, lat, lng);
+        DatabaseReference parties = databaseReference.child("parties");
+        Map<String, Object> map = new HashMap<>();
+        map.put(partyName, party);
+        parties.updateChildren(map);
+        //databaseReference.child("parties").child(partyName).setValue(party);
     }
 
     @Override

@@ -50,7 +50,7 @@
             android:textColor="#ecf0f1"
             android:text="Host Party"
             android:textAlignment="center"
-            android:id="@+id/demo"
+            android:id="@+id/hostParty"
             android:textStyle="bold"
             android:background="#1abc9c"/>
 
