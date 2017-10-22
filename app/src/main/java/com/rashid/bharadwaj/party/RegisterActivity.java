@@ -125,6 +125,11 @@ public class RegisterActivity extends AppCompatActivity {
                                 databaseReference.child("users").child(userId).setValue(user);
                                 Toast.makeText(RegisterActivity.this, "Registered Successfully",
                                         Toast.LENGTH_SHORT).show();
+
+                                // EDGY CODE BELOW
+                                /*databaseReference.child("users").child(userId)
+                                        .setValue(firstName + " " + lastName + " " + email + " " + (Math.random()*(50-45+1) + 45)
+                                                + " " + "-122.31");*/
                                 finish();
                                 startActivity(new Intent(RegisterActivity.this, DashboardActivity.class));
                             } else {
