@@ -152,7 +152,6 @@ public class RegisterActivity extends AppCompatActivity {
     private void handleSignInResult(GoogleSignInResult result) {
         if (result.isSuccess()) {
             GoogleSignInAccount acct = result.getSignInAccount();
-            startActivity(new Intent(RegisterActivity.this, DashboardActivity.class));
         }
     }
 }
