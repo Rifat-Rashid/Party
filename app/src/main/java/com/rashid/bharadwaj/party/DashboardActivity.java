@@ -277,7 +277,7 @@ public class DashboardActivity extends AppCompatActivity {
      * Name of party & location of party in geo coordinates
      */
     private void writeNewParty(String partyName, double lat, double lng) {
-        Party party = new Party(partyName, lat, lng);
+        Party party = new Party(partyName, lat, lng, "");
         DatabaseReference parties = databaseReference.child("parties");
         Map<String, Object> map = new HashMap<>();
         map.put(partyName, party);
