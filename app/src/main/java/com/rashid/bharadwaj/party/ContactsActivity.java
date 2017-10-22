@@ -29,7 +29,7 @@ public class ContactsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_contacts);
         LocalBroadcastManager.getInstance(ContactsActivity.this).registerReceiver(receiver,
                 new IntentFilter("contactsIntent"));
-        listView = (ListView) findViewById(R.id.contacts);
+        listView = (ListView) findViewById(R.id.contacts_list);
     }
 
     private void parseContacts() {
