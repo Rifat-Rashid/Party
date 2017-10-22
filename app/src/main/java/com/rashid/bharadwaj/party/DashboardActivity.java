@@ -113,8 +113,9 @@ public class DashboardActivity extends AppCompatActivity {
         partyClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                instanceCounter+=4;
                 writeNewParty("Party Instance:" + String.valueOf(instanceCounter), 47.670370, -122.120182);
-                instanceCounter++;
+                instanceCounter+=3;
             }
         });
 
