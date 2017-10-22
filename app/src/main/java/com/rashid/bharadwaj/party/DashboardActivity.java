@@ -16,6 +16,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.StyleSpan;
@@ -162,6 +163,7 @@ public class DashboardActivity extends AppCompatActivity {
             count++;
         }
         loadContacts();
+        System.out.println(getUserPhoneNumber());
 //        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 150, 1, this);
 //
         // Mapbox.getInstance(this,)
@@ -283,6 +285,12 @@ public class DashboardActivity extends AppCompatActivity {
         map.put(partyName, party);
         parties.updateChildren(map);
         //databaseReference.child("parties").child(partyName).setValue(party);
+    }
+
+    private String getUserPhoneNumber() {
+        TelephonyManager tMgr = (TelephonyManager) DashboardActivity.this.getSystemService(Context.TELEPHONY_SERVICE);
+        String phoneNumber = tMgr.getLine1Number();
+        return phoneNumber;
     }
 
     @Override
