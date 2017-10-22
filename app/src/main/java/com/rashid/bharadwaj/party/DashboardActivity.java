@@ -4,6 +4,7 @@ import android.*;
 import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Typeface;
@@ -220,14 +221,17 @@ public class DashboardActivity extends AppCompatActivity {
                             new String[]{id}, null);
                     while (cursor2.moveToNext()) {
                         String phoneNumber = cursor2.getString(cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        builder.append("Contact: ").append(name).append(", Phone Number: ").append(phoneNumber).append("\n");
+                        builder.append("Contact: ").append(name).append("& Phone Number: ").append(phoneNumber).append(",\n");
                     }
                     cursor2.close();
                 }
             }
         }
         cursor.close();
-        System.out.println(builder.toString()); // prints out to console
+        Intent contactsIntent = new Intent(DashboardActivity.this, ContactsActivity.class);
+        contactsIntent.putExtra("contacts", builder.toString());
+        startActivity(contactsIntent);
+        //System.out.println(builder.toString()); // prints out to console
     }
 
     private void getReadContactsPermission() {
