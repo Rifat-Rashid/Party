@@ -61,6 +61,8 @@ public class DashboardActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private int instanceCounter = 0;
 
+    private ArrayList<String> phoneNumbers;
+
     private Button contactsBtn;
     private Button creditCardBtn;
 
@@ -74,6 +76,7 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
         lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         databaseReference = FirebaseDatabase.getInstance().getReference();
+        phoneNumbers = new ArrayList<String>();
         contactsBtn = (Button) findViewById(R.id.demo1);
         creditCardBtn = (Button) findViewById(R.id.demo2);
 
@@ -164,6 +167,8 @@ public class DashboardActivity extends AppCompatActivity {
             count++;
         }
         loadContacts();
+        //printArrayList(phoneNumbers);
+        filterPhoneNumbers(phoneNumbers);
         //System.out.println(getUserPhoneNumber());
 ///        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 150, 1, this);
         //queryPartiesToMap();
@@ -277,6 +282,7 @@ public class DashboardActivity extends AppCompatActivity {
                     while (cursor2.moveToNext()) {
                         String phoneNumber = cursor2.getString(cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                         builder.append("Contact: ").append(name).append(" & Phone Number: ").append(phoneNumber).append(",\n");
+                        phoneNumbers.add(phoneNumber);
                     }
                     cursor2.close();
                 }
@@ -286,7 +292,7 @@ public class DashboardActivity extends AppCompatActivity {
         Intent contactsIntent = new Intent("contactsIntent");
         contactsIntent.putExtra("contacts", builder.toString());
         LocalBroadcastManager.getInstance(DashboardActivity.this).sendBroadcast(contactsIntent);
-        System.out.println(builder.toString()); // prints out to console
+        //System.out.println(builder.toString()); // prints out to console
     }
 
     private void getReadContactsPermission() {
@@ -325,6 +331,13 @@ public class DashboardActivity extends AppCompatActivity {
         TelephonyManager tMgr = (TelephonyManager) DashboardActivity.this.getSystemService(Context.TELEPHONY_SERVICE);
         String phoneNumber = tMgr.getLine1Number();
         return phoneNumber;
+    }
+
+    // DEBUG METHOD BELOW
+    private void printArrayList(ArrayList<String> arrayList) {
+        for (int i = 0; i < arrayList.size(); i++) {
+            System.out.println(arrayList.get(i));
+        }
     }
 
     @Override
