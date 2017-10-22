@@ -63,6 +63,8 @@ public class DashboardActivity extends AppCompatActivity {
                 mapboxMap.getUiSettings().setTiltGesturesEnabled(false);
             }
         });
+
+        // read contacts permission code
         readContactsPermission = false;
         int count = 0;
         while (!readContactsPermission) {
@@ -79,6 +81,11 @@ public class DashboardActivity extends AppCompatActivity {
         // Mapbox.getInstance(this,)
     }
 
+
+    // gets all user contacts and stores in StringBuilder object.
+    // fields stored:
+            // name
+            // phone number
     private void loadContacts() {
         StringBuilder builder = new StringBuilder();
         ContentResolver resolver = getContentResolver();
@@ -102,7 +109,7 @@ public class DashboardActivity extends AppCompatActivity {
             }
         }
         cursor.close();
-        System.out.println(builder.toString());
+        System.out.println(builder.toString()); // prints out to console
     }
 
     private void getReadContactsPermission() {
