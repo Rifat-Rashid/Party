@@ -64,17 +64,16 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
         readContactsPermission = false;
+        int count = 0;
         while (!readContactsPermission) {
             getReadContactsPermission();
-            if (!readContactsPermission) {
+            if (count >= 1) {
                 Toast.makeText(DashboardActivity.this, "Aww, we need your contacts!", Toast.LENGTH_LONG)
                         .show();
-                break;
             }
+            count++;
         }
-        if (readContactsPermission) {
-            loadContacts();
-        }
+        loadContacts();
 //        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 150, 1, this);
 //
         // Mapbox.getInstance(this,)
