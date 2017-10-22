@@ -43,6 +43,7 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -163,9 +164,20 @@ public class DashboardActivity extends AppCompatActivity {
             count++;
         }
         loadContacts();
-        System.out.println(getUserPhoneNumber());
-//        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 150, 1, this);
-        queryPartiesToMap();
+        //System.out.println(getUserPhoneNumber());
+///        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 150, 1, this);
+        //queryPartiesToMap();
+
+        /*
+         * testing methods go below
+         */
+
+        ArrayList<String> numbersList = new ArrayList<>();
+        numbersList.add("425-301-1512");
+        numbersList.add("425301-1525");
+        numbersList.add("(206)-715-0124");
+        numbersList.add("9792293657");
+        filterPhoneNumbers(numbersList);
     }
 
     public void queryPartiesToMap() {
@@ -188,7 +200,7 @@ public class DashboardActivity extends AppCompatActivity {
                             final String phoneNumberList = (String) dataSnapshot.child("phoneNumberList").getValue();
 
                             String userPhoneNumber = getUserPhoneNumber();
-                            System.out.println("Party Name: " + partyName + " Lat: " + latitude + " Lng: " + longitude + " PN:"+userPhoneNumber);
+                            System.out.println("Party Name: " + partyName + " Lat: " + latitude + " Lng: " + longitude + " PN:" + userPhoneNumber);
                             if (phoneNumberList.contains(userPhoneNumber)) {
                                 mapView.getMapAsync(new OnMapReadyCallback() {
                                     @Override
@@ -217,6 +229,27 @@ public class DashboardActivity extends AppCompatActivity {
             }
         };
         partiesRef.addListenerForSingleValueEvent(eventListener);
+    }
+
+    /*
+     * TODO: implementation
+     */
+    public void filterPhoneNumbers(ArrayList<String> phoneNumberList) {
+        final int minNumberChar = (int) '0';
+        final int maxNumberChar = (int) '9';
+        for (int i = 0; i < phoneNumberList.size(); i++) {
+            String number = phoneNumberList.get(i);
+            String newNumber = "";
+            for (int j = 0; j < number.length(); j++) {
+                char c = number.charAt(j);  // get char and see if its a valid number
+                // between 0 & 9
+                if ((int) c >= minNumberChar && (int) c <= maxNumberChar) {
+                    newNumber += c;
+                }
+            }
+            System.out.println("Old Number: " + number);
+            System.out.println("New Number: " + newNumber);
+        }
     }
 
 
@@ -332,6 +365,13 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent i = new Intent(DashboardActivity.this, LaunchActivityBeta.class);
+        startActivity(i);
+        overridePendingTransition(R.anim.right, R.anim.left);
     }
 
 }
