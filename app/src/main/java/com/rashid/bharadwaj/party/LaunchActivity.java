@@ -12,6 +12,7 @@ public class LaunchActivity extends AppCompatActivity {
     private Button registerBtn;
     private Button loginBtn;
     private Button dashboardBtn;
+    private Button creditCardBtn;
     /* ************************* */
 
     @Override
@@ -22,7 +23,8 @@ public class LaunchActivity extends AppCompatActivity {
         // TESTING CODE BELOW
         registerBtn = (Button) findViewById(R.id.register);
         loginBtn = (Button) findViewById(R.id.login);
-        dashboardBtn =  (Button) findViewById(R.id.dashboard);
+        dashboardBtn = (Button) findViewById(R.id.dashboard);
+        creditCardBtn = (Button) findViewById(R.id.credit_card);
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,6 +41,12 @@ public class LaunchActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LaunchActivity.this, DashboardActivity.class));
+            }
+        });
+        creditCardBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LaunchActivity.this, CreditCardActivity.class));
             }
         });
         /* ***************************************************************************** */
