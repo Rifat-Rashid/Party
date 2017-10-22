@@ -176,15 +176,6 @@ public class DashboardActivity extends AppCompatActivity {
         /*
          * testing methods go below
          */
-
-        ArrayList<String> numbersList = new ArrayList<>();
-        numbersList.add("425-301-1512");
-        numbersList.add("425301-1525");
-        numbersList.add("(206)-715-0124");
-        numbersList.add("9792293657");
-        filterPhoneNumbers(numbersList);
-        queryPartiesToMap();
-
     }
 
     public void queryPartiesToMap() {
@@ -208,7 +199,6 @@ public class DashboardActivity extends AppCompatActivity {
 
                             String userPhoneNumber = getUserPhoneNumber();
                             System.out.println("Party Name: " + partyName + " Lat: " + latitude + " Lng: " + longitude + " PN:" + userPhoneNumber);
-
                             if (phoneNumberList.contains(userPhoneNumber)) {
                                 mapView.getMapAsync(new OnMapReadyCallback() {
                                     @Override
@@ -325,6 +315,7 @@ public class DashboardActivity extends AppCompatActivity {
         Map<String, Object> map = new HashMap<>();
         map.put(partyName, party);
         parties.updateChildren(map);
+        //databaseReference.child("parties").child(partyName).setValue(party);
     }
 
     private String getUserPhoneNumber() {
