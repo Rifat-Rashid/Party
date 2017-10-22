@@ -169,6 +169,7 @@ public class DashboardActivity extends AppCompatActivity {
         loadContacts();
         //printArrayList(phoneNumbers);
         filterPhoneNumbers(phoneNumbers);
+        queryPartiesToMap();
         //System.out.println(getUserPhoneNumber());
 ///        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 150, 1, this);
         //queryPartiesToMap();
@@ -176,14 +177,6 @@ public class DashboardActivity extends AppCompatActivity {
         /*
          * testing methods go below
          */
-
-        ArrayList<String> numbersList = new ArrayList<>();
-        numbersList.add("425-301-1512");
-        numbersList.add("425301-1525");
-        numbersList.add("(206)-715-0124");
-        numbersList.add("9792293657");
-        filterPhoneNumbers(numbersList);
-        queryPartiesToMap();
 
     }
 
