@@ -165,8 +165,6 @@ public class DashboardActivity extends AppCompatActivity {
         loadContacts();
         System.out.println(getUserPhoneNumber());
 //        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 150, 1, this);
-//
-        // Mapbox.getInstance(this,)
         queryPartiesToMap();
     }
 
@@ -187,19 +185,21 @@ public class DashboardActivity extends AppCompatActivity {
                             final Double latitude = (Double) dataSnapshot.child("lat").getValue();
                             final Double longitude = (Double) dataSnapshot.child("lng").getValue();
                             final String partyName = (String) dataSnapshot.child("partyName").getValue();
-                            System.out.println("Party Name: " + partyName + " Lat: " + latitude+ " Lng: " + longitude);
+                            final String phoneNumberList = (String) dataSnapshot.child("phoneNumberList").getValue();
 
-                            mapView.getMapAsync(new OnMapReadyCallback() {
-                                @Override
-                                public void onMapReady(MapboxMap mapboxMap) {
-                                    mapboxMap.addMarker(new MarkerOptions()
-                                      .position(new LatLng(latitude, longitude))
-                                      .title(partyName)
-                                    );
-                                }
-                            });
-
-
+                            String userPhoneNumber = getUserPhoneNumber();
+                            System.out.println("Party Name: " + partyName + " Lat: " + latitude + " Lng: " + longitude + " PN:"+userPhoneNumber);
+                            if (phoneNumberList.contains(userPhoneNumber)) {
+                                mapView.getMapAsync(new OnMapReadyCallback() {
+                                    @Override
+                                    public void onMapReady(MapboxMap mapboxMap) {
+                                        mapboxMap.addMarker(new MarkerOptions()
+                                                .position(new LatLng(latitude, longitude))
+                                                .title(partyName)
+                                        );
+                                    }
+                                });
+                            }
                         }
 
                         @Override
